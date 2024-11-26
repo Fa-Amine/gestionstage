@@ -14,7 +14,7 @@ import {
 
 export default function Header(){
     <Box>
-        <image src = ""  alt ="" />
+        <image src = "../../Logo.png"  alt ="" />
         <Button variant="ghost">Ghost</Button>
         <Button variant="ghost">Ghost</Button>
         <Button variant="ghost">Ghost</Button>
