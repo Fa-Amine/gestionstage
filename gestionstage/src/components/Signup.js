@@ -35,15 +35,17 @@ import {
           </Heading>
           <Grid w="full" justifyItems={'flex-start'} padding={"50px"} templateColumns="repeat(2, 1fr)" >
             <Text>Nom Complet</Text>
-            <Input mb={"5"} rounded={'3xl'} placeholder="Votre Nom Complet" />
+            <Input name="nomComplete" mb={"5"} rounded={'3xl'} placeholder="Votre Nom Complet" />
             <Text >Numero d'etudiant</Text>
-            <Input mb={"5"} rounded={'3xl'} placeholder="Votre numero d'etudiant ici" />
+            <Input name="n_Etudiant" mb={"5"} rounded={'3xl'} placeholder="Votre numero d'etudiant ici" />
             <Text >Email Acadèmique</Text>
-            <Input mb={"5"} rounded={'3xl'} placeholder="Email@upf.ac.ma" />
+            <Input name="email" mb={"5"} rounded={'3xl'} placeholder="Email@upf.ac.ma" />
             <Text >Numero de Tel</Text>
-            <Input mb={"5"} rounded={'3xl'} placeholder="(+212)" />
+            <Input name="numeroTelephone" mb={"5"} rounded={'3xl'} placeholder="(+212)" />
+            <Text >Filiere</Text>
+            <Input name="filiere" mb={"5"} rounded={'3xl'} placeholder="Filiere" />
             <Text >Mot de passe</Text>
-            <Input type='password' mb={"5"} rounded={'3xl'} placeholder="Votre mot de passe ici" />
+            <Input name="motDePasse" type='password' mb={"5"} rounded={'3xl'} placeholder="Votre mot de passe ici" />
             <Flex alignItems={'center'} gap= "20px" mt="20px">
             <Button   w={"70%"} rounded={'2xl'} colorPalette="cyan" variant="solid">S'inscrire</Button>
             <Button onClick={() => navigate("/Login")} w={"70%"} rounded={'2xl'} colorPalette="cyan" variant="solid">j'ai deja un compte</Button>
