@@ -17,17 +17,10 @@ import {
     Grid,
     Checkbox
   } from '@chakra-ui/react'
-import { useNavigate } from 'react-router-dom';
 
-  export default function Login() {
-    const navigate = useNavigate();
-    return (
-        
-      <Flex   justifyContent={'center'} mt="50px" padding={"50"}>
-         <Box>
-                <Image  w="90%" src="/Images/upfimg.png" />
-
-        </Box>
+  export default function Signup(){
+    return(
+        <Flex   justifyContent={'center'} mt="50px" padding={"50"}>
         <Box
           h="500px"
           rounded="l3"
@@ -36,7 +29,7 @@ import { useNavigate } from 'react-router-dom';
           justifyItems={'flex-start'}
         >
           <Heading ml="30px" mt="30px" mb="30px" fontSize={"30px"}>
-            Bienvenue
+            Creér un compte
           </Heading>
           <Grid w="full" justifyItems={'flex-start'} padding={"50px"} templateColumns="repeat(2, 1fr)" >
             <Text>Email</Text>
@@ -45,12 +38,14 @@ import { useNavigate } from 'react-router-dom';
             <Input rounded={'3xl'} placeholder="Votre mot de passe ici" />
             <Flex justifyContent={"center"} gap="10px" mt="20px">
             <Button w={"50%"}rounded={'2xl'} mt = "20px" colorPalette="cyan" variant="solid">Se connecter</Button>
-            <Button  onClick={() => navigate("/signup")} w={"50%"} rounded={'2xl'} mt = "20px" colorPalette="cyan" variant="solid">S'inscrire</Button></Flex>
+            <Button   w={"50%"} rounded={'2xl'} mt = "20px" colorPalette="cyan" variant="solid">S'inscrire</Button></Flex>
           </Grid>
           
         </Box>
       </Flex>
+
+
+
+
     );
-
-
   }

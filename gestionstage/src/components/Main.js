@@ -14,11 +14,14 @@ import {
     Heading,
     Image
   } from '@chakra-ui/react'
+  import { useNavigate } from 'react-router-dom';
 
   export default function Main(){
+    const navigate = useNavigate();
+
     return(
         <>
-
+            
             <Flex mt ="10px" padding={"20"}>  
                 <Box mt ="80px" h="100" maxW="500px" justifyContent={'normal'} >
                     <Heading mb= "10px" fontSize={"30px"}>
@@ -31,7 +34,7 @@ import {
                         fonction
                         de votre domaine de prédilection.
                     </Text>
-                    <Button mt = "20px" colorPalette="teal" variant="solid">Postuler Maintenant !</Button>
+                    <Button onClick={() => navigate("/login")} mt = "20px" colorPalette="teal" variant="solid">Postuler Maintenant !</Button>
 
                 </Box>
                 <Box>
