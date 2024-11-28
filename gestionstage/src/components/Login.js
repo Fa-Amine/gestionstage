@@ -15,12 +15,47 @@ import {
     Image,
     Input,
     Grid,
-    Checkbox
+    Checkbox,
+    Toast,
+    Toaster,
+    
   } from '@chakra-ui/react'
-import { useNavigate } from 'react-router-dom';
+
+import { useState ,axios} from 'react';
+import { Form, useNavigate } from 'react-router-dom';
 
   export default function Login() {
     const navigate = useNavigate();
+
+    const [formData, setFormData] = useState({
+      email: "",
+      password: "",
+    });
+  
+    const handleChange = (e) => {
+      const { name, value } = e.target;
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value, // Ensure the correct field is updated
+      }));
+    };
+  
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      try {
+        const response = await axios.post(
+          "http://localhost:8080/api/login",
+          formData
+        );
+        setFormData({ email: "", password: "" });
+        console.log("Response:", response.data);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+    
+
+
     return (
         
       <Flex   justifyContent={'center'} mt="50px" padding={"50"}>
@@ -28,7 +63,7 @@ import { useNavigate } from 'react-router-dom';
                 <Image  w="90%" src="/Images/upfimg.png" />
 
         </Box>
-        <Box
+        <Box 
           h="500px"
           rounded="l3"
           width="50%"
@@ -38,13 +73,13 @@ import { useNavigate } from 'react-router-dom';
           <Heading ml="30px" mt="30px" mb="30px" fontSize={"30px"}>
             Bienvenue
           </Heading>
-          <Grid w="full" justifyItems={'flex-start'} padding={"50px"} templateColumns="repeat(2, 1fr)" >
+          <Grid as={"form"} onSubmit={handleSubmit} w="full" justifyItems={'flex-start'} padding={"50px"} templateColumns="repeat(2, 1fr)" >
             <Text>Email</Text>
-            <Input  mb={"5"} rounded={'3xl'} placeholder="Votre Email" />
+            <Input name="email" value={FormData.email} onChange={() => handleChange} mb={"5"} rounded={'3xl'} placeholder="Votre Email" />
             <Text >Mot de passe</Text>
-            <Input type='password' rounded={'3xl'} placeholder="Votre mot de passe ici" />
+            <Input name="password" value={FormData.password} onChange={() => handleChange} type='password' rounded={'3xl'} placeholder="Votre mot de passe ici" />
             <Flex justifyContent={"center"} gap="10px" mt="20px">
-            <Button w={"50%"}rounded={'2xl'} mt = "20px" colorPalette="cyan" variant="solid">Se connecter</Button>
+            <Button  type="submit" w={"50%"}rounded={'2xl'} mt = "20px" colorPalette="cyan" variant="solid" >Se connecter</Button>
             <Button  onClick={() => navigate("/signup")} w={"50%"} rounded={'2xl'} mt = "20px" colorPalette="cyan" variant="solid">S'inscrire</Button></Flex>
           </Grid>
           
