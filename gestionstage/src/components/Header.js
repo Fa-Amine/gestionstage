@@ -11,7 +11,8 @@ import {
     Button,
     Image
   } from '@chakra-ui/react'
-  import { useNavigate } from 'react-router-dom';
+  import { useNavigate , NavLink } from 'react-router-dom';
+
 
 export default function Header(){
     const navigate = useNavigate();
@@ -25,6 +26,7 @@ export default function Header(){
             <Button variant="ghost">Entreprise</Button>
             <Button variant="ghost">Annonces</Button>
             <Button onClick={() => navigate("/login")} variant="ghost">Mon Compte</Button>
+            
         </div>
     </Flex>
 

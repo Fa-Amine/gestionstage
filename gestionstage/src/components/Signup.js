@@ -17,10 +17,12 @@ import {
     Grid,
     Checkbox
   } from '@chakra-ui/react'
+  import { useNavigate } from 'react-router-dom';
 
   export default function Signup(){
+    const navigate = useNavigate();
     return(
-        <Flex   justifyContent={'center'} mt="50px" padding={"50"}>
+        <Flex   justifyContent={'center'} mt="10px" padding={"30"}>
         <Box
           h="500px"
           rounded="l3"
@@ -32,13 +34,20 @@ import {
             Creér un compte
           </Heading>
           <Grid w="full" justifyItems={'flex-start'} padding={"50px"} templateColumns="repeat(2, 1fr)" >
-            <Text>Email</Text>
-            <Input mb={"5"} rounded={'3xl'} placeholder="Votre Email" />
+            <Text>Nom Complet</Text>
+            <Input mb={"5"} rounded={'3xl'} placeholder="Votre Nom Complet" />
+            <Text >Numero d'etudiant</Text>
+            <Input mb={"5"} rounded={'3xl'} placeholder="Votre numero d'etudiant ici" />
+            <Text >Email Acadèmique</Text>
+            <Input mb={"5"} rounded={'3xl'} placeholder="Email@upf.ac.ma" />
+            <Text >Numero de Tel</Text>
+            <Input mb={"5"} rounded={'3xl'} placeholder="(+212)" />
             <Text >Mot de passe</Text>
-            <Input rounded={'3xl'} placeholder="Votre mot de passe ici" />
-            <Flex justifyContent={"center"} gap="10px" mt="20px">
-            <Button w={"50%"}rounded={'2xl'} mt = "20px" colorPalette="cyan" variant="solid">Se connecter</Button>
-            <Button   w={"50%"} rounded={'2xl'} mt = "20px" colorPalette="cyan" variant="solid">S'inscrire</Button></Flex>
+            <Input type='password' mb={"5"} rounded={'3xl'} placeholder="Votre mot de passe ici" />
+            <Flex alignItems={'center'} gap= "20px" mt="20px">
+            <Button   w={"70%"} rounded={'2xl'} colorPalette="cyan" variant="solid">S'inscrire</Button>
+            <Button onClick={() => navigate("/Login")} w={"70%"} rounded={'2xl'} colorPalette="cyan" variant="solid">j'ai deja un compte</Button>
+            </Flex>
           </Grid>
           
         </Box>

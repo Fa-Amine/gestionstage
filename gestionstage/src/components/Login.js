@@ -40,9 +40,9 @@ import { useNavigate } from 'react-router-dom';
           </Heading>
           <Grid w="full" justifyItems={'flex-start'} padding={"50px"} templateColumns="repeat(2, 1fr)" >
             <Text>Email</Text>
-            <Input mb={"5"} rounded={'3xl'} placeholder="Votre Email" />
+            <Input  mb={"5"} rounded={'3xl'} placeholder="Votre Email" />
             <Text >Mot de passe</Text>
-            <Input rounded={'3xl'} placeholder="Votre mot de passe ici" />
+            <Input type='password' rounded={'3xl'} placeholder="Votre mot de passe ici" />
             <Flex justifyContent={"center"} gap="10px" mt="20px">
             <Button w={"50%"}rounded={'2xl'} mt = "20px" colorPalette="cyan" variant="solid">Se connecter</Button>
             <Button  onClick={() => navigate("/signup")} w={"50%"} rounded={'2xl'} mt = "20px" colorPalette="cyan" variant="solid">S'inscrire</Button></Flex>
