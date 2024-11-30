@@ -118,7 +118,7 @@ public class AuthController {
 	    }
 	    
 	 
-	 //authenticate methode to check user and motdepasse
+	 	//authenticate methode to check user and motdepasse
 	    private Authentication authenticate(String username, String password) {
 	    	
 	    	UserDetails userDetails = customUserDetails.loadUserByUsername(username);
