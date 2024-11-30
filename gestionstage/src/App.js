@@ -12,21 +12,17 @@ import Signup from './components/Signup';
 function App() {
   return (
     <>
-      <div className="App">
       
       <Router>
-      <Header />
-      <Routes>
-      
-        <Route path="/" element={<Main />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-      </Routes>
-    </Router>
+          <Header />
+          <Routes>
+              <Route path="/" element={<Main />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+          </Routes>
+      </Router>
       {/* <Main /> */}
       {/* <Login /> */}
-       
-      </div>
     </>
   );
 }
