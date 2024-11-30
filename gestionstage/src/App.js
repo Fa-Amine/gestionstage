@@ -7,27 +7,25 @@ import Header from './components/Header';
 import Main from './components/Main';
 import Login from './components/Login';
 import Signup from './components/Signup';
+import Profile from './pages/profile';
+import GlobalProvider, { globalProvider } from './context/AppContext';
+import { useContext } from 'react';
 
 
 function App() {
+  const { user } = useContext(globalProvider);
   return (
-    <>
-      <div className="App">
-      
+    <GlobalProvider>
       <Router>
-      <Header />
-      <Routes>
-      
-        <Route path="/" element={<Main />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-      </Routes>
-    </Router>
-      {/* <Main /> */}
-      {/* <Login /> */}
-       
-      </div>
-    </>
+        <Header />
+        <Routes>
+            <Route path="/" element={<Main />} />
+            <Route path={"/login" } element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/profile" element={<Profile />} />
+        </Routes>
+      </Router>
+    </GlobalProvider>
   );
 }
 

@@ -25,13 +25,13 @@ import {
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
-      nomComplete:"",
-      n_student:"",
-      email: "",
-      numeroTelephone:"",
-      filiere:"",
-      motDePasse: "",
-    });
+      nomComplete: "",
+      email : "",
+      filiere : "",
+      n_Etudiant : "",
+      numeroTelephone: "",
+      motDePasse : ""
+      });
   
     const handleChange = (e) => {
       const { name, value } = e.target;
@@ -39,22 +39,29 @@ import {
         ...prevData,
         [name]: value, // Ensure the correct field is updated
       }));
+      console.log("aaaa");
     };
   
     const handleSubmit = async (e) => {
       e.preventDefault();
       try {
         const response = await axios.post(
-          "http://localhost:5001/api/login",
+          "http://localhost:5001/auth/signupStagiaire",
           formData
         );
-        setFormData({ email: "", password: "" , tel:"" , n_student:"" , filiere:"" ,nomComplete:""});
+        setFormData({ nomComplete: "",
+        email : "",
+        filiere : "",
+        n_Etudiant : "",
+        numeroTelephone: "",
+        motDePasse : ""});
         console.log("Response:", response.data);
+        localStorage.setItem("usertoken", JSON.stringify(response.data.jwt));
+        navigate("/profile");
       } catch (error) {
         console.error("Error:", error);
       }
     };
-
 
 
 
