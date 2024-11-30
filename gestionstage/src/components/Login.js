@@ -21,7 +21,10 @@ import {
     
   } from '@chakra-ui/react'
 
-import { useState ,axios} from 'react';
+import { useState } from 'react';
+import axios from 'axios'; 
+
+
 import { Form, useNavigate } from 'react-router-dom';
 
   export default function Login() {
@@ -44,7 +47,7 @@ import { Form, useNavigate } from 'react-router-dom';
       e.preventDefault();
       try {
         const response = await axios.post(
-          "http://localhost:8080/api/login",
+          "http://localhost:5001/api/login",
           formData
         );
         setFormData({ email: "", password: "" });
@@ -77,7 +80,7 @@ import { Form, useNavigate } from 'react-router-dom';
             <Text>Email</Text>
             <Input name="email" value={formData.email} onChange={handleChange} mb={"5"} rounded={'3xl'} placeholder="Votre Email" />
             <Text >Mot de passe</Text>
-            <Input name="password" value={formData.password} onChange={handleChange} type='password' rounded={'3xl'} placeholder="Votre mot de passe ici" />
+            <Input name="motDePasse" value={formData.password} onChange={handleChange} type='password' rounded={'3xl'} placeholder="Votre mot de passe ici" />
             <Flex justifyContent={"center"} gap="10px" mt="20px">
             <Button  type="submit" w={"50%"}rounded={'2xl'} mt = "20px" colorPalette="cyan" variant="solid" >Se connecter</Button>
             <Button  onClick={() => navigate("/signup")} w={"50%"} rounded={'2xl'} mt = "20px" colorPalette="cyan" variant="solid">S'inscrire</Button></Flex>

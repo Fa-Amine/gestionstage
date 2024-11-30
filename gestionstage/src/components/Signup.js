@@ -17,10 +17,47 @@ import {
     Grid,
     Checkbox
   } from '@chakra-ui/react'
+  import axios from 'axios'; 
+  import { useState } from 'react';
   import { useNavigate } from 'react-router-dom';
 
   export default function Signup(){
     const navigate = useNavigate();
+
+    const [formData, setFormData] = useState({
+      nomComplete:"",
+      n_student:"",
+      email: "",
+      numeroTelephone:"",
+      filiere:"",
+      motDePasse: "",
+    });
+  
+    const handleChange = (e) => {
+      const { name, value } = e.target;
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value, // Ensure the correct field is updated
+      }));
+    };
+  
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      try {
+        const response = await axios.post(
+          "http://localhost:5001/api/login",
+          formData
+        );
+        setFormData({ email: "", password: "" , tel:"" , n_student:"" , filiere:"" ,nomComplete:""});
+        console.log("Response:", response.data);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+
+
+
     return(
         <Flex   justifyContent={'center'} mt="10px" padding={"30"}>
         <Box
@@ -33,21 +70,21 @@ import {
           <Heading ml="30px" mt="30px" mb="30px" fontSize={"30px"}>
             Creér un compte
           </Heading>
-          <Grid w="full" justifyItems={'flex-start'} padding={"50px"} templateColumns="repeat(2, 1fr)" >
+          <Grid as={"form"} onSubmit={handleSubmit} w="full" justifyItems={'flex-start'} padding={"50px"} templateColumns="repeat(2, 1fr)" >
             <Text>Nom Complet</Text>
-            <Input name="nomComplete" mb={"5"} rounded={'3xl'} placeholder="Votre Nom Complet" />
+            <Input value={formData.nomComplete} onChange={handleChange} name="nomComplete" mb={"5"} rounded={'3xl'} placeholder="Votre Nom Complet" />
             <Text >Numero d'etudiant</Text>
-            <Input name="n_Etudiant" mb={"5"} rounded={'3xl'} placeholder="Votre numero d'etudiant ici" />
+            <Input value={formData.n_student} onChange={handleChange} name="n_student" mb={"5"} rounded={'3xl'} placeholder="Votre numero d'etudiant ici" />
             <Text >Email Acadèmique</Text>
-            <Input name="email" mb={"5"} rounded={'3xl'} placeholder="Email@upf.ac.ma" />
+            <Input value={formData.email} onChange={handleChange} name="email" mb={"5"} rounded={'3xl'} placeholder="Email@upf.ac.ma" />
             <Text >Numero de Tel</Text>
-            <Input name="numeroTelephone" mb={"5"} rounded={'3xl'} placeholder="(+212)" />
+            <Input value={formData.numeroTelephone} onChange={handleChange} name="numeroTelephone" mb={"5"} rounded={'3xl'} placeholder="(+212)" />
             <Text >Filiere</Text>
-            <Input name="filiere" mb={"5"} rounded={'3xl'} placeholder="Filiere" />
+            <Input value={formData.filiere} onChange={handleChange} name="filiere" mb={"5"} rounded={'3xl'} placeholder="Filiere" />
             <Text >Mot de passe</Text>
-            <Input name="motDePasse" type='password' mb={"5"} rounded={'3xl'} placeholder="Votre mot de passe ici" />
+            <Input value={formData.motDePasse} onChange={handleChange} name="motDePasse" type='password' mb={"5"} rounded={'3xl'} placeholder="Votre mot de passe ici" />
             <Flex alignItems={'center'} gap= "20px" mt="20px">
-            <Button   w={"70%"} rounded={'2xl'} colorPalette="cyan" variant="solid">S'inscrire</Button>
+            <Button type='submit'  w={"70%"} rounded={'2xl'} colorPalette="cyan" variant="solid">S'inscrire</Button>
             <Button onClick={() => navigate("/Login")} w={"70%"} rounded={'2xl'} colorPalette="cyan" variant="solid">j'ai deja un compte</Button>
             </Flex>
           </Grid>
