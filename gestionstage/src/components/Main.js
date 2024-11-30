@@ -14,18 +14,20 @@ import {
     Heading,
     Image
   } from '@chakra-ui/react'
+import { useContext } from 'react';
   import { useNavigate } from 'react-router-dom';
+import { globalProvider } from '../context/AppContext';
 
   export default function Main(){
     const navigate = useNavigate();
-
+    const {user} = useContext(globalProvider);
     return(
         <>
             
             <Flex mt ="10px" padding={"20"}>  
                 <Box mt ="80px" h="100" maxW="500px" justifyContent={'normal'} >
                     <Heading mb= "10px" fontSize={"30px"}>
-                        Bienvenue
+                        Bienvenue {user ? user.nomComplete : ""}
                     </Heading>
                     <Text fontSize={"16px"} fontWeight="light" lineClamp="2">
                         Avez-Vous une préference en un secteur
