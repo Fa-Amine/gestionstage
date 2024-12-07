@@ -7,9 +7,9 @@ spring:
     name: GestionDeStage-Backend
 
   datasource:
-    url: jdbc:mysql://localhost:3306/gestionstage
+    url: jdbc:mysql://localhost:3306/projettutore_gestiondestage
     username: root
-    password: root
+    password: 
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:

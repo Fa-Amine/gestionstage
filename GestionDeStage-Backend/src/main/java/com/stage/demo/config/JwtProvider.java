@@ -11,6 +11,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtParserBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
@@ -18,9 +20,6 @@ public class JwtProvider {
 
 	static SecretKey key = Keys.hmacShaKeyFor(JwtConstant.SECRET_KEY.getBytes());
 	
-	
-	
-
 	public static String generateToken(Authentication auth) {
 
 		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
@@ -33,6 +32,20 @@ public class JwtProvider {
 		return jwt;
 	}
 	
+	@SuppressWarnings("deprecation")
+	public static Claims verifyToken(String jwt) {
+
+		jwt = jwt.substring(7);
+        try {
+        	Jws<Claims> parsedToken = Jwts.parser()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(jwt);
+        		return parsedToken.getBody();
+        }catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 	
 
 	public static String getEmailFromJwtToken(String jwt) {

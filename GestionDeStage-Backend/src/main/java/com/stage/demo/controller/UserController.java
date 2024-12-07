@@ -7,9 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.stage.demo.config.JwtProvider;
 import com.stage.demo.entities.Stagiaire;
 import com.stage.demo.entities.User;
 import com.stage.demo.service.UserService;
@@ -24,7 +26,7 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	
+
 	@GetMapping("/profile")
 	public ResponseEntity<Stagiaire> getUserProfile (@RequestHeader("Authorization") String jwt){
 		
@@ -32,6 +34,8 @@ public class UserController {
 		
 		return new ResponseEntity<>(stagiaire , HttpStatus.OK);
 	}
+	
+	
 	
 	@GetMapping("/allUsers")
 	public ResponseEntity<List<User>> getUsers (@RequestHeader("Authorization") String jwt){

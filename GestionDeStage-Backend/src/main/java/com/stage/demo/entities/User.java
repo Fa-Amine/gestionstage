@@ -12,33 +12,40 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "TYPE", length = 4)
 
 public class User {
-	
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	private String nomComplete;
-	
+
 	private String email;
-	
+
 	private String motDePasse;
-	
+
 	private String role;
+
+	public User() {
+
+	}
 	
 	
-	
-	
+
+	public User(Long id, String nomComplete, String email, String motDePasse, String role) {
+		super();
+		this.id = id;
+		this.nomComplete = nomComplete;
+		this.email = email;
+		this.motDePasse = motDePasse;
+		this.role = role;
+	}
+
+
 
 	public User(String nomComplete, String email, String motDePasse, String role) {
 		super();
@@ -47,7 +54,66 @@ public class User {
 		this.motDePasse = motDePasse;
 		this.role = role;
 	}
-	
+
+
+
+	public Long getId() {
+		return id;
+	}
+
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+
+	public String getNomComplete() {
+		return nomComplete;
+	}
+
+
+
+	public void setNomComplete(String nomComplete) {
+		this.nomComplete = nomComplete;
+	}
+
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+
+	public String getMotDePasse() {
+		return motDePasse;
+	}
+
+
+
+	public void setMotDePasse(String motDePasse) {
+		this.motDePasse = motDePasse;
+	}
+
+
+
+	public String getRole() {
+		return role;
+	}
+
+
+
+	public void setRole(String role) {
+		this.role = role;
+	}
 	
 	
 

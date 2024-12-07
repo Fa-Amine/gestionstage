@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +22,7 @@ import com.stage.demo.repository.UserRepository;
 import com.stage.demo.request.LoginRequest;
 import com.stage.demo.response.AuthResponse;
 import com.stage.demo.service.CustomerUserServiceImplementation;
+import com.stage.demo.service.UserService;
 
 
 
@@ -30,14 +32,26 @@ public class AuthController {
 	
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
 	@Autowired
+	private UserService userService;
+	
+	@Autowired
 	private CustomerUserServiceImplementation customUserDetails;
 	
-	
+	@PostMapping("/verify")
+	public ResponseEntity verifyUserAuthenticated (@RequestHeader("Authorization") String jwt){
+		try {
+	        JwtProvider.verifyToken(jwt);
+	        Stagiaire stagiaire = userService.getStagiaireProfile(jwt);
+	        return new ResponseEntity(stagiaire, HttpStatus.OK);
+	    } catch (Exception e) {	        // If invalid, send an error message
+	        return new ResponseEntity("Token validation failed: " + e.getMessage(), HttpStatus.UNAUTHORIZED);
+	    }
+	}
 	
 	//Post methode for signup dial Stagiaire. ill create the rest later
 	@PostMapping("/signupStagiaire")
@@ -119,7 +133,7 @@ public class AuthController {
 	    
 	 
 	 //authenticate methode to check user and motdepasse
-	    private Authentication authenticate(String username, String password) {
+	 private Authentication authenticate(String username, String password) {
 	    	
 	    	UserDetails userDetails = customUserDetails.loadUserByUsername(username);
 	    	
