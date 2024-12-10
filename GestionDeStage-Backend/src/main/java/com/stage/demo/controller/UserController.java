@@ -9,14 +9,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.stage.demo.entities.Stagiaire;
-import com.stage.demo.entities.User;
+import com.stage.demo.model.User;
 import com.stage.demo.service.UserService;
 
 
 
-@Controller
+@RestController
 @RequestMapping("/api/users")
 public class UserController {
 
@@ -25,18 +25,31 @@ public class UserController {
 	private UserService userService;
 	
 	
-	@GetMapping("/profile")
-	public ResponseEntity<Stagiaire> getUserProfile (@RequestHeader("Authorization") String jwt){
+	@GetMapping("/test")
+	public ResponseEntity<String> test (@RequestHeader("Authorization") String jwt){
+
+		User user = userService.getProfile(jwt);
 		
-		Stagiaire stagiaire = userService.getStagiaireProfile(jwt);
-		
-		return new ResponseEntity<>(stagiaire , HttpStatus.OK);
+		return new ResponseEntity<>("welcome to Users Page", HttpStatus.OK);
 	}
+	
+	
+	@GetMapping("/profile")
+	public ResponseEntity<User> getUserProfile (@RequestHeader("Authorization") String jwt){
+		
+		
+		User user = userService.getProfile(jwt);
+		System.out.println(user);
+		
+		return new ResponseEntity<>(user , HttpStatus.OK);
+	}
+	
+	
 	
 	@GetMapping("/allUsers")
 	public ResponseEntity<List<User>> getUsers (@RequestHeader("Authorization") String jwt){
 		
-		List<User> users = userService.getAllStagiaire();
+		List<User> users = userService.getAllUsers();
 		
 		return new ResponseEntity<>(users , HttpStatus.OK);
 	}

@@ -1,13 +1,14 @@
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.stage.demo.entities.Stagiaire;
+import com.stage.demo.model.Stagiaire;
 import com.stage.demo.repository.UserRepository;
 import com.stage.demo.service.UserService;
+
 
 public class maintest {
 	
 	@Autowired
-	private UserService userService;
+	private UserRepository userService;
 	
 	
 	public static void main(String[] args) {
@@ -28,7 +29,7 @@ public class maintest {
 		
 		
 		
-		//userService.insert(stagiaire);
+	
 	}
 
 }

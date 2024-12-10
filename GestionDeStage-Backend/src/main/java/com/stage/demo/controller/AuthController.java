@@ -15,8 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.stage.demo.config.JwtProvider;
-import com.stage.demo.entities.Stagiaire;
-import com.stage.demo.entities.User;
+import com.stage.demo.model.Stagiaire;
 import com.stage.demo.repository.UserRepository;
 import com.stage.demo.request.LoginRequest;
 import com.stage.demo.response.AuthResponse;
@@ -87,7 +86,7 @@ public class AuthController {
     	authResponse.setMessage("Registered Successfully");
     	authResponse.setStatus(true);
     	
-    	return new ResponseEntity<>(authResponse , HttpStatus.OK);
+    	return new ResponseEntity<>(authResponse , HttpStatus.CREATED);
     	
 	}
 	

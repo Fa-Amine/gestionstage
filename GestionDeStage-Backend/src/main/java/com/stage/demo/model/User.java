@@ -1,4 +1,4 @@
-package com.stage.demo.entities;
+package com.stage.demo.model;
 
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;

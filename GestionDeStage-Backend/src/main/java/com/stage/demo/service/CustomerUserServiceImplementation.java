@@ -10,8 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.stage.demo.entities.Stagiaire;
-import com.stage.demo.entities.User;
+import com.stage.demo.model.User;
 import com.stage.demo.repository.UserRepository;
 
 @Service
@@ -23,7 +22,7 @@ public class CustomerUserServiceImplementation implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		Stagiaire user = userRepository.findByEmail(username);
+		User user = userRepository.findByEmail(username);
 
 		if (user == null) {
 			throw new UsernameNotFoundException("user not found with email" + username);
