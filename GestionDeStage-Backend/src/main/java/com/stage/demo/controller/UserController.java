@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.stage.demo.model.Stagiaire;
 import com.stage.demo.model.User;
 import com.stage.demo.service.UserService;
 
@@ -53,6 +54,8 @@ public class UserController {
 		
 		return new ResponseEntity<>(users , HttpStatus.OK);
 	}
+	
+	
 
 	
 }

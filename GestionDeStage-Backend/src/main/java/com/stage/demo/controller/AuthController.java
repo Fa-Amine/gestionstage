@@ -52,6 +52,7 @@ public class AuthController {
     	String n_telephone = user.getNumeroTelephone();
     	String password = user.getMotDePasse(); 	
     	String role = "ROLE_STAGIAIRE";
+    //	boolean status = user.isAccStatus();
     	
     	
     	User isEmailExist = userRepository.findByEmail(email);

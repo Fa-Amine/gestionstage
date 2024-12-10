@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.stage.demo.config.JwtProvider;
+import com.stage.demo.model.Stagiaire;
 import com.stage.demo.model.User;
+import com.stage.demo.repository.StagiaireRepository;
 import com.stage.demo.repository.UserRepository;
 
 @Service
@@ -14,6 +16,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private StagiaireRepository stagiaireRepository;
 
 	
 	@Override
@@ -30,6 +35,7 @@ public class UserServiceImpl implements UserService {
 		
 		return userRepository.findAll();
 	}
+	
 	
 	
 

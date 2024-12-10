@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.stage.demo.model.Stagiaire;
 import com.stage.demo.model.User;
 
 
@@ -13,5 +14,7 @@ public interface UserService {
 	public User getProfile (String jwt);
 	
 	public List<User> getAllUsers();
+
+	
 
 }
