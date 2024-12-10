@@ -11,5 +11,5 @@ import com.stage.demo.model.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 	
 	
-	public Stagiaire findByEmail(String email);
+	public User findByEmail(String email);
 }

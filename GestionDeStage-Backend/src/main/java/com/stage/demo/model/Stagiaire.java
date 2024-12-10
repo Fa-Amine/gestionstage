@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 
 @Entity
-@DiscriminatorValue("STAG")
+//@DiscriminatorValue("STAG")
 public class Stagiaire extends User {
 
 	
@@ -21,6 +21,8 @@ public class Stagiaire extends User {
 	private String n_Etudiant;
 	
 	private String numeroTelephone;
+	
+	private boolean accStatus;
 	
 	
 	

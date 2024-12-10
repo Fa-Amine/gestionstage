@@ -18,8 +18,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "TYPE", length = 4)
+@Inheritance(strategy = InheritanceType.JOINED)
+//@DiscriminatorColumn(name = "TYPE", length = 4)
 
 public class User {
 	

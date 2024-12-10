@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.stage.demo.config.JwtProvider;
 import com.stage.demo.model.Stagiaire;
+import com.stage.demo.model.User;
 import com.stage.demo.repository.UserRepository;
 import com.stage.demo.request.LoginRequest;
 import com.stage.demo.response.AuthResponse;
@@ -53,7 +54,7 @@ public class AuthController {
     	String role = "ROLE_STAGIAIRE";
     	
     	
-    	Stagiaire isEmailExist = userRepository.findByEmail(email);
+    	User isEmailExist = userRepository.findByEmail(email);
     	
     	if(isEmailExist != null) {
     		
