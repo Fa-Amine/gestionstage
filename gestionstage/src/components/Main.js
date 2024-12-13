@@ -27,7 +27,7 @@ import { globalProvider } from '../context/AppContext';
             <Flex mt ="10px" padding={"20"}>  
                 <Box mt ="80px" h="100" maxW="500px" justifyContent={'normal'} >
                     <Heading mb= "10px" fontSize={"30px"}>
-                        Bienvenue {user ? user.nomComplete : ""}
+                        Bienvenue
                     </Heading>
                     <Text fontSize={"16px"} fontWeight="light" lineClamp="2">
                         Avez-Vous une préference en un secteur

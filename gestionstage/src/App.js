@@ -10,6 +10,7 @@ import Signup from './components/Signup';
 import Profile from './pages/profile';
 import GlobalProvider, { globalProvider } from './context/AppContext';
 import { useContext } from 'react';
+import Stage from './components/Stage';
 
 
 function App() {
@@ -23,6 +24,9 @@ function App() {
             <Route path={"/login" } element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/profile/annoncerstage" element={<Stage />} />
+            
+
         </Routes>
       </Router>
     </GlobalProvider>
