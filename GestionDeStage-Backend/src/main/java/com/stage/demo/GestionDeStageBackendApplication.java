@@ -38,7 +38,7 @@ public class GestionDeStageBackendApplication implements CommandLineRunner {
 		stagiaire.setN_Etudiant("C155121");
 		stagiaire.setNumeroTelephone("021512121");
 
-		userRepository.save(encadrantPedagogique);
+	 //	userRepository.save(encadrantPedagogique);
 	}
 
 }

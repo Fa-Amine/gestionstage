@@ -80,13 +80,11 @@ public class StagiaireController {
 	
 	
 	@PutMapping("/{id}/validateAcc")
-	public ResponseEntity<Stagiaire> ValidateStagiaireAccount (@PathVariable Long id) throws Exception{
+	public ResponseEntity<Stagiaire> ValidateStagiaireAccount (@PathVariable Long id, @RequestHeader("Authorization") String jwt) throws Exception{
 		
-
+		User user = userService.getProfile(jwt);
 		
 		Stagiaire stag = stagiaireService.validateStagiaireAccount(id);
-		
-		
 		
 		return new ResponseEntity<>(stag, HttpStatus.OK);
 	}
