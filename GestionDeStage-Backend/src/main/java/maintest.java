@@ -8,7 +8,7 @@ import com.stage.demo.service.UserService;
 public class maintest {
 	
 	@Autowired
-	private UserRepository userService;
+	private static UserRepository userRepository;
 	
 	
 	public static void main(String[] args) {
@@ -17,9 +17,9 @@ public class maintest {
 		
 		
 		
-		stagiaire.setNomComplete("saad Boukili");
-		stagiaire.setEmail("saadboukili66@gmail.com");
-		stagiaire.setMotDePasse("123");
+		stagiaire.setNomComplete("hamid settar");
+		stagiaire.setEmail("hamid@gmail.com");
+		stagiaire.setMotDePasse("122");
 		stagiaire.setRole("ROLE_STAGIAIRE");
 		
 		stagiaire.setFiliere("INFO");
@@ -27,7 +27,7 @@ public class maintest {
 		stagiaire.setNumeroTelephone("021512121");
 		
 		
-		
+		userRepository.save(stagiaire);
 		
 	
 	}
