@@ -48,7 +48,7 @@ public class AuthController {
 	        JwtProvider.verifyToken(jwt);
 	        Stagiaire stagiaire = userService.getStagiaireProfile(jwt);
 	        return new ResponseEntity(stagiaire, HttpStatus.OK);
-	    } catch (Exception e) {	        // If invalid, send an error message
+	    } catch (Exception e) {
 	        return new ResponseEntity("Token validation failed: " + e.getMessage(), HttpStatus.UNAUTHORIZED);
 	    }
 	}
