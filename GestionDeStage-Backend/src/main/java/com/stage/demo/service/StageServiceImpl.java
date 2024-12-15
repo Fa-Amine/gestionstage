@@ -1,6 +1,8 @@
 package com.stage.demo.service;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +36,7 @@ public class StageServiceImpl implements StageService {
 	private final String FOLDER_PATH="D:\\upf4\\S7\\Project Tutoré\\Projet Backend Final\\gestionstage-BackendBranch\\GestionDeStage-Backend\\src\\main\\resources\\files\\";
 	
 	@Override
-	public Stage createStage(String jwt, Stage stage) throws Exception {
+	public Stage createStage(String jwt, Stage stage, MultipartFile file) throws Exception {
 
 		User user = userService.getProfile(jwt);
 
@@ -47,10 +49,17 @@ public class StageServiceImpl implements StageService {
 	    Stagiaire stagiaire = (Stagiaire) user;
 	//    System.out.println(stagiaire);
 	    stage.setStagiaire(stagiaire);
-        
 	    
+	    Document document = uploadToFileSystem(file);
+	    
+	    List<Document> savedDocuments = new ArrayList<>();
+	    savedDocuments.add(document);
+	    
+	    stage.setDocuments(savedDocuments);
+	    		
+	    		
 	    Stage savedStage = stageRepository.save(stage);
-		
+	    
 		
 //		// Save the documents
 //		List<Document> savedDocuments = new ArrayList<>();
@@ -83,7 +92,7 @@ public class StageServiceImpl implements StageService {
 		return savedStage;
 	}
 	
-	 public Document uploadImageToFileSystem(MultipartFile file) throws IOException, IllegalStateException, java.io.IOException {
+	 public Document uploadToFileSystem(MultipartFile file) throws IOException, IllegalStateException, java.io.IOException {
 		 
 	        String filePath=FOLDER_PATH+file.getOriginalFilename();
 

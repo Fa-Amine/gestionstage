@@ -1,5 +1,7 @@
 package com.stage.demo.controller;
 
+import java.sql.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,10 +27,24 @@ public class StageController {
 	private StageService stageService;
 
 	@PostMapping("/createStage")
-	public ResponseEntity<Stage> createStage(@RequestHeader("Authorization") String jwt, @RequestBody Stage stage) {
+	public ResponseEntity<Stage> createStage(@RequestHeader("Authorization") String jwt, @RequestParam("type") String type,
+            @RequestParam("status") boolean status,
+            @RequestParam("nomEntreprise") String nomEntreprise,
+            @RequestParam("domainEntreprise") String domainEntreprise,
+            @RequestParam("dateDebut") Date dateDebut,
+            @RequestParam("dateFin") Date dateFin, @RequestParam("file") MultipartFile file) {
+		
 		try {
+			
+			Stage stage = new Stage();
+			stage.setType(type);
+			stage.setStatus(status);
+			stage.setDateDebut(dateDebut);
+			stage.setDateFin(dateFin);
+			stage.setNomEntreprise(nomEntreprise);
+			stage.setDomainEntreprise(domainEntreprise);
 
-			Stage savedStage = stageService.createStage(jwt, stage);
+			Stage savedStage = stageService.createStage(jwt, stage, file);
 
 			return new ResponseEntity<>(savedStage, HttpStatus.CREATED);
 		} catch (RuntimeException e) {
@@ -40,9 +56,10 @@ public class StageController {
 	
 	
 	@PostMapping("/uploadFile")
-	public ResponseEntity<Document> uploadImageToFIleSystem(@RequestHeader("Authorization") String jwt, @RequestParam("file") MultipartFile file) throws IOException, IllegalStateException, java.io.IOException {
+	public ResponseEntity<Document> uploadImageToFIleSystem(@RequestHeader("Authorization") String jwt, 
+			@RequestParam("file") MultipartFile file) throws IOException, IllegalStateException, java.io.IOException {
 		
-		Document uploadImage = stageService.uploadImageToFileSystem(file);
+		Document uploadImage = stageService.uploadToFileSystem(file);
 		
 		return new ResponseEntity<>(uploadImage,HttpStatus.OK);
 	}
