@@ -25,7 +25,11 @@ public class Document {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String path;
+	private String fileName;
+	
+	private String fileType;
+	
+	private String filePath;
 	
 	@ManyToOne
 	private Stage stage;
