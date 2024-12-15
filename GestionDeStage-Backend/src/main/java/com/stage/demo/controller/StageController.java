@@ -1,9 +1,11 @@
 package com.stage.demo.controller;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +20,8 @@ import com.stage.demo.model.Stage;
 import com.stage.demo.service.StageService;
 
 import io.jsonwebtoken.io.IOException;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 @RestController
 @RequestMapping("/api/stage")
@@ -32,7 +36,7 @@ public class StageController {
             @RequestParam("nomEntreprise") String nomEntreprise,
             @RequestParam("domainEntreprise") String domainEntreprise,
             @RequestParam("dateDebut") Date dateDebut,
-            @RequestParam("dateFin") Date dateFin, @RequestParam("file") MultipartFile file) {
+            @RequestParam("dateFin") Date dateFin, @RequestParam("files") List<MultipartFile> file) {
 		
 		try {
 			
@@ -59,9 +63,20 @@ public class StageController {
 	public ResponseEntity<Document> uploadImageToFIleSystem(@RequestHeader("Authorization") String jwt, 
 			@RequestParam("file") MultipartFile file) throws IOException, IllegalStateException, java.io.IOException {
 		
-		Document uploadImage = stageService.uploadToFileSystem(file);
+		Stage stage = new Stage();
+		
+		Document uploadImage = stageService.uploadToFileSystem(file, stage);
 		
 		return new ResponseEntity<>(uploadImage,HttpStatus.OK);
 	}
+	
+	@GetMapping("/getAllStages")
+	public ResponseEntity<List<Stage>> getMethodName(@RequestHeader("Authorization") String jwt) {
+		
+		List<Stage> stages = stageService.getAllStages();
+		
+		return new ResponseEntity<List<Stage>>(stages, HttpStatus.OK);
+	}
+	
 
 }
