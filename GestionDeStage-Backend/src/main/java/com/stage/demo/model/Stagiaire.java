@@ -3,7 +3,8 @@ package com.stage.demo.model;
 
 import java.util.List;
 
-import jakarta.persistence.DiscriminatorValue;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;

@@ -3,6 +3,8 @@ package com.stage.demo.model;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -47,6 +49,7 @@ public class Stage {
 	private Date dateFin;
 	
 	@ManyToOne
+    @JsonIgnore
 	private Stagiaire stagiaire;
 	
 	@OneToMany(mappedBy = "stage")
