@@ -13,10 +13,12 @@ import io.jsonwebtoken.io.IOException;
 @Service
 public interface StageService {
 
-	public Stage createStage(String jwt, Stage stage, List<MultipartFile> files) throws Exception;
+	public String createStage(String jwt, Stage stage, MultipartFile[] files) throws Exception;
 
-	public  Document uploadToFileSystem(MultipartFile file, Stage stage) throws IOException, IllegalStateException, java.io.IOException;
+	//public  Document uploadToFileSystem(MultipartFile file, Stage stage) throws IOException, IllegalStateException, java.io.IOException;
 	
 	public List<Stage> getAllStages();
+	
+	 
 		
 }

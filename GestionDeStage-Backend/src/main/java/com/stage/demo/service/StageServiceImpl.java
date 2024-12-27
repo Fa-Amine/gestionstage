@@ -1,6 +1,10 @@
 package com.stage.demo.service;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,10 +33,12 @@ public class StageServiceImpl implements StageService {
 	@Autowired
 	private UserService userService;
 
-	private final String FOLDER_PATH = "D:\\upf4\\S7\\Project Tutoré\\Projet Backend Final\\gestionstage-BackendBranch\\GestionDeStage-Backend\\src\\main\\resources\\files\\";
+	//private final String FOLDER_PATH = "D:\\upf4\\S7\\Project Tutoré\\Projet Backend Final\\gestionstage-BackendBranch\\GestionDeStage-Backend\\src\\main\\resources\\files\\";
+
+	private final String uploadDir = System.getProperty("user.dir") + "/uploads";
 
 	@Override
-	public Stage createStage(String jwt, Stage stage, List<MultipartFile> files) throws Exception {
+	public String createStage(String jwt, Stage stage, MultipartFile[] files) throws Exception {
 
 		User user = userService.getProfile(jwt);
 
@@ -42,48 +48,65 @@ public class StageServiceImpl implements StageService {
 
 		Stagiaire stagiaire = (Stagiaire) user;
 		// System.out.println(stagiaire);
+
+		if (stagiaire.isAccStatus() != true) {
+			throw new RuntimeException("Unauthorized: Only validated stagiaires accounts can create stages.");
+		}
+
 		stage.setStagiaire(stagiaire);
+	//	System.out.println(stage);
 
-		List<Document> savedDocuments = new ArrayList<>();
+		Path uploadPath = Paths.get(uploadDir);
 
-		Stage savedStage = stageRepository.save(stage);
-
-		// Save the documents
+		if (!Files.exists(uploadPath)) {
+			Files.createDirectories(uploadPath);
+		}
 
 		for (MultipartFile file : files) {
+			String originalFileName = file.getOriginalFilename();
 
-			Document document = uploadToFileSystem(file, stage);
-
-			savedDocuments.add(document);
+			if (originalFileName != null && !originalFileName.isEmpty()) {
+				String fileExtension = "";
+				int dotIndex = originalFileName.lastIndexOf(".");
+				if (dotIndex != -1) {
+					fileExtension = originalFileName.substring(dotIndex);
+				}
+				String uniqueFileName = originalFileName.replace(fileExtension, "") + "_" + Instant.now().toEpochMilli()
+						+ fileExtension;
+				Path filePath = uploadPath.resolve(uniqueFileName);
+				file.transferTo(filePath.toFile());
+				Document document = new Document(uniqueFileName);
+				document.setStage(stage);
+				stage.getDocuments().add(document);
+			}
 		}
+		
+		 stageRepository.save(stage);
+		 
+		 String msg = "Files uploaded successfully to " + uploadPath.toAbsolutePath();
 
-		stage.setDocuments(savedDocuments);
-
-		return savedStage;
+		return msg;
 	}
 
-	public Document uploadToFileSystem(MultipartFile file, Stage stage)
-			throws IOException, IllegalStateException, java.io.IOException {
-
-		String filePath = FOLDER_PATH + file.getOriginalFilename();
-
-		Document fileData = documentRepository.save(Document.builder().
-				fileName(file.getOriginalFilename()).
-			    fileType(file.getContentType()).
-			    filePath(filePath).
-			    stage(stage).build());
-
-		file.transferTo(new File(filePath));
-
-		if (fileData != null) {
-			return fileData;
-		}
-		return null;
-	}
+//	public Document uploadToFileSystem(MultipartFile file, Stage stage)
+//			throws IOException, IllegalStateException, java.io.IOException {
+//
+//		String filePath = FOLDER_PATH + file.getOriginalFilename();
+//
+//		Document fileData = documentRepository.save(Document.builder().fileName(file.getOriginalFilename())
+//				.fileType(file.getContentType()).filePath(filePath).stage(stage).build());
+//
+//		file.transferTo(new File(filePath));
+//
+//		if (fileData != null) {
+//			return fileData;
+//		}
+//		return null;
+//	}
 
 	@Override
 	public List<Stage> getAllStages() {
-		
+
 		return stageRepository.findAll();
 	}
 

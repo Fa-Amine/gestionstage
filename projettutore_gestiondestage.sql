@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : sam. 14 déc. 2024 à 13:54
+-- Généré le : ven. 27 déc. 2024 à 23:33
 -- Version du serveur : 8.2.0
 -- Version de PHP : 8.0.30
 
@@ -30,11 +30,22 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `document`;
 CREATE TABLE IF NOT EXISTS `document` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `path` varchar(255) COLLATE latin1_general_ci DEFAULT NULL,
   `stage_id` bigint DEFAULT NULL,
+  `path` varchar(255) COLLATE latin1_general_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKq4v7pdqj86nuemlxncd69atdb` (`stage_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+--
+-- Déchargement des données de la table `document`
+--
+
+INSERT INTO `document` (`id`, `stage_id`, `path`) VALUES
+(1, 44, 'Saad Boukili_1735341715889.pdf'),
+(2, 45, 'Saad Boukili_1735341960419.pdf'),
+(3, 45, 'beautiful-gwen-lol-wallpaper-3440x1440_15_1735341960421.jpg'),
+(4, 45, 'Cycle of dopamine_1735341960424.png'),
+(5, 46, 'godofwar-kratos_wide_1735342258324.jpg');
 
 -- --------------------------------------------------------
 
@@ -94,7 +105,28 @@ CREATE TABLE IF NOT EXISTS `stage` (
   `stagiaire_id` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKeeyluj04qr2r6mkkr9wf4exx1` (`stagiaire_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+
+--
+-- Déchargement des données de la table `stage`
+--
+
+INSERT INTO `stage` (`id`, `date_debut`, `date_fin`, `domain_entreprise`, `nom_entreprise`, `status`, `type`, `stagiaire_id`) VALUES
+(19, '2024-01-15', '2024-06-15', 'Software Development', 'Tech Corp', b'1', 'PFA', 10),
+(33, '2024-01-15', '2024-06-15', 'Software Development', 'Tech Corp', b'1', 'PFA', 10),
+(34, '2024-01-15', '2024-06-15', 'Software Development', 'UPF university', b'1', 'PFE', 10),
+(35, '2024-01-15', '2024-06-15', 'Software Development', 'UPF university', b'1', 'PFE', 10),
+(36, '2024-01-15', '2024-06-15', 'Software Development', 'UPF university', b'1', 'PFE', 10),
+(37, '2024-01-15', '2024-06-15', 'Software Development', 'UPF university', b'1', 'PFE', 10),
+(38, '2024-01-15', '2024-06-15', 'Software Development', 'UPF university', b'1', 'PFE', 10),
+(39, '2024-01-15', '2024-06-15', 'Software Development', 'UPF university', b'1', 'PFE', 10),
+(40, '2024-01-15', '2024-06-15', 'Software Development', 'UPF university', b'1', 'PFE', 10),
+(41, '2024-01-15', '2024-06-15', 'Software Development', 'UPF university', b'1', 'PFE', 10),
+(42, '2024-01-15', '2024-06-15', 'Software Development', 'UPF university', b'1', 'PFE', 10),
+(43, '2024-01-15', '2024-06-15', 'Software Development', 'UPF university', b'1', 'PFE', 10),
+(44, '2024-01-15', '2024-06-15', 'Software Development', 'UPF university', b'1', 'PFE', 10),
+(45, '2024-01-15', '2024-06-15', 'Software Development', 'UPF university', b'1', 'PFE', 10),
+(46, '2024-01-15', '2024-06-15', 'Software Development', 'UPF university', b'1', 'PFE', 10);
 
 -- --------------------------------------------------------
 
@@ -117,7 +149,8 @@ CREATE TABLE IF NOT EXISTS `stagiaire` (
 --
 
 INSERT INTO `stagiaire` (`acc_status`, `filiere`, `n_etudiant`, `numero_telephone`, `id`) VALUES
-(b'1', 'archit', 'C256445', '03333333', 10);
+(b'1', 'archit', 'C256445', '03333333', 10),
+(b'0', 'info', 'C256445', '031515151', 15);
 
 -- --------------------------------------------------------
 
@@ -133,7 +166,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `nom_complete` varchar(255) COLLATE latin1_general_ci DEFAULT NULL,
   `role` varchar(255) COLLATE latin1_general_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
 -- Déchargement des données de la table `user`
@@ -142,7 +175,8 @@ CREATE TABLE IF NOT EXISTS `user` (
 INSERT INTO `user` (`id`, `email`, `mot_de_passe`, `nom_complete`, `role`) VALUES
 (10, 'aminefarah@gmail.com', '$2a$10$IH/L0N.hmLkpI29vxnL6GOSDL8rGHQMmhT8EbyBPjR/8Am9rGDMnu', 'amine farah', 'ROLE_STAGIAIRE'),
 (11, 'saadboukili66@gmail.com', '$2a$10$JXx1akPUSb5BI0WsqE3KueuSlJ5QJQVHTyeUd5WmnWhb5cuierjju', 'saad boukili', 'ROLE_ADMIN'),
-(14, 'ma3ti@gmail.com', '1234', 'ma3ti boujem3a', 'ROLE_ENCADRANT');
+(14, 'ma3ti@gmail.com', '$2a$10$JXx1akPUSb5BI0WsqE3KueuSlJ5QJQVHTyeUd5WmnWhb5cuierjju', 'ma3ti boujem3a', 'ROLE_ENCADRANT'),
+(15, 'saadboukili@gmail.com', '$2a$10$KAu5lDwd6K72L1MRIAdnPetG670dHuGf9zKte7Bj/bkAaAa9C01XC', 'saad boukili', 'ROLE_STAGIAIRE');
 
 --
 -- Contraintes pour les tables déchargées

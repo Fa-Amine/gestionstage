@@ -1,10 +1,12 @@
 package com.stage.demo.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -52,8 +54,33 @@ public class Stage {
     @JsonIgnore
 	private Stagiaire stagiaire;
 	
-	@OneToMany(mappedBy = "stage")
-	private List<Document> documents;
+	@OneToMany(mappedBy = "stage", cascade = CascadeType.PERSIST)
+	private List<Document> documents = new ArrayList<Document>();
+	
+	
+
+	public Stage(String type, boolean status, String nomEntreprise, String domainEntreprise, Date dateDebut,
+			Date dateFin, Stagiaire stagiaire, List<Document> documents) {
+		super();
+		this.type = type;
+		this.status = status;
+		this.nomEntreprise = nomEntreprise;
+		this.domainEntreprise = domainEntreprise;
+		this.dateDebut = dateDebut;
+		this.dateFin = dateFin;
+		this.stagiaire = stagiaire;
+		this.documents = documents;
+	}	
+	
+	public Stage(String type, boolean status, String nomEntreprise, String domainEntreprise, Date dateDebut, Date dateFin) {
+		this.type = type;
+		this.status = status;
+		this.nomEntreprise = nomEntreprise;
+		this.domainEntreprise = domainEntreprise;
+		this.dateDebut = dateDebut;
+		this.dateFin = dateFin;
+	}
+	
 	
 
 }

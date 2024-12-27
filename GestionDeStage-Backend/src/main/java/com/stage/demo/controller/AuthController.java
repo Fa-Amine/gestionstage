@@ -98,22 +98,33 @@ public class AuthController {
 	 @PostMapping("/login")
 	    public ResponseEntity<AuthResponse> signin (@RequestBody LoginRequest loginRequest){
 	    	
-	    	String username = loginRequest.getEmail();
-	    	String password = loginRequest.getPassword();
-	    	
-	    	System.out.println(username+ " ------- " +password);
-	    	
-	    	Authentication authentication = authenticate(username , password);
-	    	SecurityContextHolder.getContext().setAuthentication(authentication);
-	    	
-	    	String token = JwtProvider.generateToken(authentication);
-	    	AuthResponse authResponse = new AuthResponse();
-	    	
-	    	authResponse.setMessage("Login Successful");
-	    	authResponse.setJwt(token);
-	    	authResponse.setStatus(true);
-	    	
-	    	return new ResponseEntity<>(authResponse , HttpStatus.OK);
+			AuthResponse authResponse = new AuthResponse();
+			
+			try {
+				String username = loginRequest.getEmail();
+				String password = loginRequest.getPassword();
+
+				System.out.println(username+ " ------- " +password);
+
+				Authentication authentication = authenticate(username , password);
+				SecurityContextHolder.getContext().setAuthentication(authentication);
+
+				String token = JwtProvider.generateToken(authentication);
+
+				authResponse.setMessage("Login Successful");
+				authResponse.setJwt(token);
+				authResponse.setStatus(true);
+				return new ResponseEntity<>(authResponse , HttpStatus.OK);
+				
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+				authResponse.setMessage(e.getMessage());
+				authResponse.setJwt(null);
+				authResponse.setStatus(false);
+				
+				return new ResponseEntity<>(authResponse , HttpStatus.UNAUTHORIZED);
+			}
 	    	
 	    	
 	    }

@@ -29,13 +29,12 @@ public class Document {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String fileName;
-	
-	private String fileType;
-	
-	private String filePath;
+	private String path;
 	
 	@ManyToOne
-	@JsonIgnore
 	private Stage stage;
+
+	public Document(String path) {
+		this.path = path;
+	}
 }
