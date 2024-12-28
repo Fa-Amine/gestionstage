@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,18 +19,31 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.stage.demo.model.Document;
 import com.stage.demo.model.Stage;
+import com.stage.demo.model.Stagiaire;
+import com.stage.demo.model.User;
 import com.stage.demo.service.StageService;
+import com.stage.demo.service.UserService;
 
 import io.jsonwebtoken.io.IOException;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 
 @RestController
 @RequestMapping("/api/stage")
 public class StageController {
 
+	
+	
 	@Autowired
 	private StageService stageService;
+	
+	@Autowired
+	private UserService userService;
+	
+	
 
 	@PostMapping("/createStage")
 	public ResponseEntity<String> createStage(@RequestHeader("Authorization") String jwt
@@ -43,6 +57,7 @@ public class StageController {
 		
 		try {
 			
+			status = false;
 			Stage stage = new Stage(type, status, nomEntreprise, domainEntreprise, dateDebut, dateFin);
 
 			String savedStage = stageService.createStage(jwt, stage, files);
@@ -56,17 +71,6 @@ public class StageController {
 	}
 	
 	
-//	@PostMapping("/uploadFile") // testing api to upload file alone
-//	public ResponseEntity<Document> uploadImageToFIleSystem(@RequestHeader("Authorization") String jwt, 
-//			@RequestParam("file") MultipartFile file) throws IOException, IllegalStateException, java.io.IOException {
-//		
-//		Stage stage = new Stage(); // empty stage just for testing
-//		
-//		Document uploadImage = stageService.uploadToFileSystem(file, stage);
-//		
-//		return new ResponseEntity<>(uploadImage,HttpStatus.OK);
-//	}
-	
 	@GetMapping("/getAllStages")
 	public ResponseEntity<List<Stage>> getMethodName(@RequestHeader("Authorization") String jwt) {
 		
@@ -74,6 +78,56 @@ public class StageController {
 		
 		return new ResponseEntity<List<Stage>>(stages, HttpStatus.OK);
 	}
+	
+	
+	@GetMapping("/allStagesNotValid")
+	public ResponseEntity<List<Stage>> getStagiaireNotValid (@RequestHeader("Authorization") String jwt){
+		
+		List<Stage> stages = stageService.getAllStagesNotValidated();
+		
+		return new ResponseEntity<>(stages , HttpStatus.OK);
+	}
+	
+	@GetMapping("/allStagesValid")
+	public ResponseEntity<List<Stage>> getStagiaireValid (@RequestHeader("Authorization") String jwt){
+		
+		List<Stage> stages = stageService.getAllStagesValidated();
+		
+		return new ResponseEntity<>(stages , HttpStatus.OK);
+	}
+	
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<Stage> getStagiaireById (@PathVariable Long id,@RequestHeader("Authorization") String jwt) throws Exception{
+		
+		User user = userService.getProfile(jwt);
+		
+		Stage stage = stageService.getStageById(id);
+		
+		return new ResponseEntity<>(stage , HttpStatus.OK);
+	}
+	
+	
+	@PutMapping("/{id}/validateStage")
+	public ResponseEntity<Stage> ValidateStagiaireAccount (@PathVariable Long id, @RequestHeader("Authorization") String jwt) throws Exception{
+		
+		User user = userService.getProfile(jwt);
+		
+		Stage stag = stageService.validateStage(id);
+		
+		return new ResponseEntity<>(stag, HttpStatus.OK);
+	}
+	
+	
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> deleteStagiaire (@PathVariable Long id ) throws Exception{
+		
+		stageService.deleteStage(id);
+		
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
+
 	
 
 }

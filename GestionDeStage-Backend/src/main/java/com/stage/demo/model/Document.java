@@ -32,6 +32,7 @@ public class Document {
 	private String path;
 	
 	@ManyToOne
+	@JsonIgnore
 	private Stage stage;
 
 	public Document(String path) {

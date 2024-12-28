@@ -1,11 +1,9 @@
 package com.stage.demo.service;
 
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +17,6 @@ import com.stage.demo.model.User;
 import com.stage.demo.repository.DocumentRepository;
 import com.stage.demo.repository.StageRepository;
 
-import io.jsonwebtoken.io.IOException;
 
 @Service
 public class StageServiceImpl implements StageService {
@@ -109,5 +106,52 @@ public class StageServiceImpl implements StageService {
 
 		return stageRepository.findAll();
 	}
+	
+
+	@Override
+	public List<Stage> getAllStagesNotValidated() {
+		
+		return stageRepository.findByStatus(false);
+	}
+
+	@Override
+	public List<Stage> getAllStagesValidated() {
+		
+		return stageRepository.findByStatus(true);
+	}
+
+	@Override
+	public Stage getStageById(Long stageId) throws Exception {
+		
+		return stageRepository.findById(stageId).orElseThrow(() -> new Exception("Stage not found with id : "+stageId));
+	}
+
+	@Override
+	public void deleteStage(Long id) throws Exception {
+		
+		Stage stage = getStageById(id);
+	
+		// Delete documents manually
+		/*
+		 * if (stage.getDocuments() != null && !stage.getDocuments().isEmpty()) { for
+		 * (Document document : stage.getDocuments()) {
+		 * documentRepository.delete(document); } }
+		 */
+		
+		stageRepository.delete(stage);
+		
+	}
+
+	@Override
+	public Stage validateStage(Long stageId) throws Exception {
+	
+		Stage stage = getStageById(stageId);
+		
+		stage.setStatus(true);
+		
+		return stageRepository.save(stage);
+	}
+	
+	
 
 }

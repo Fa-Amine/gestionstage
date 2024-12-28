@@ -54,7 +54,8 @@ public class Stage {
     @JsonIgnore
 	private Stagiaire stagiaire;
 	
-	@OneToMany(mappedBy = "stage", cascade = CascadeType.PERSIST)
+	// orphanRemoval to delete foreign key automatically 
+	@OneToMany(mappedBy = "stage", cascade = CascadeType.PERSIST, orphanRemoval = true)
 	private List<Document> documents = new ArrayList<Document>();
 	
 	

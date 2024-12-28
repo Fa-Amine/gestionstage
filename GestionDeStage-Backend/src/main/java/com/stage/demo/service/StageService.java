@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.stage.demo.model.Document;
 import com.stage.demo.model.Stage;
+import com.stage.demo.model.Stagiaire;
 
 import io.jsonwebtoken.io.IOException;
 
@@ -18,6 +19,16 @@ public interface StageService {
 	//public  Document uploadToFileSystem(MultipartFile file, Stage stage) throws IOException, IllegalStateException, java.io.IOException;
 	
 	public List<Stage> getAllStages();
+	
+    public List<Stage> getAllStagesNotValidated();
+	
+	public List<Stage> getAllStagesValidated();
+	
+	public Stage getStageById (Long stageId) throws Exception;
+	
+	public void deleteStage (Long id) throws Exception;
+	
+	public Stage validateStage (Long stageId) throws Exception;
 	
 	 
 		
