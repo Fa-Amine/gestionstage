@@ -30,6 +30,7 @@ public class Stagiaire extends User {
 	private boolean accStatus;
 	
 	@OneToMany(mappedBy = "stagiaire")
+	@JsonIgnore
 	private List<Stage> stages;
 	
 	

@@ -127,7 +127,13 @@ public class StageServiceImpl implements StageService {
 	}
 
 	@Override
-	public void deleteStage(Long id) throws Exception {
+	public void deleteStage(Long id, String jwt) throws Exception {
+		
+		User user = userService.getProfile(jwt);
+
+		if (!user.getRole().equals("ROLE_ADMIN")) {
+			throw new RuntimeException("Unauthorized: Only ADMIN can delete stages.");
+		}
 		
 		Stage stage = getStageById(id);
 	
@@ -143,7 +149,13 @@ public class StageServiceImpl implements StageService {
 	}
 
 	@Override
-	public Stage validateStage(Long stageId) throws Exception {
+	public Stage validateStage(Long stageId, String jwt) throws Exception {
+		
+		User user = userService.getProfile(jwt);
+
+		if (!user.getRole().equals("ROLE_ADMIN")) {
+			throw new RuntimeException("Unauthorized: Only ADMIN can validate stages.");
+		}
 	
 		Stage stage = getStageById(stageId);
 		

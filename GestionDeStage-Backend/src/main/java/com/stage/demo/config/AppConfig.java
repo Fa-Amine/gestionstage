@@ -38,7 +38,7 @@ public class AppConfig {
 		                        .csrf(csrf->csrf.disable())
 		                        .cors(cors->cors.configurationSource(corsConfigurationSource()))
 		                        
-		                        .httpBasic(Customizer.withDefaults())
+		                        .httpBasic(httpBasic -> httpBasic.disable())
 		                        
 		                        .formLogin(form -> form.disable());
 		  

@@ -26,9 +26,9 @@ public interface StageService {
 	
 	public Stage getStageById (Long stageId) throws Exception;
 	
-	public void deleteStage (Long id) throws Exception;
+	public void deleteStage (Long id, String jwt) throws Exception;
 	
-	public Stage validateStage (Long stageId) throws Exception;
+	public Stage validateStage (Long stageId, String jwt) throws Exception;
 	
 	 
 		

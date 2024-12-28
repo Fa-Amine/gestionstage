@@ -51,7 +51,6 @@ public class Stage {
 	private Date dateFin;
 	
 	@ManyToOne
-    @JsonIgnore
 	private Stagiaire stagiaire;
 	
 	// orphanRemoval to delete foreign key automatically 

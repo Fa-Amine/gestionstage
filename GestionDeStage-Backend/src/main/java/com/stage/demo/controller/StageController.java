@@ -111,9 +111,9 @@ public class StageController {
 	@PutMapping("/{id}/validateStage")
 	public ResponseEntity<Stage> ValidateStagiaireAccount (@PathVariable Long id, @RequestHeader("Authorization") String jwt) throws Exception{
 		
-		User user = userService.getProfile(jwt);
+	//	User user = userService.getProfile(jwt);
 		
-		Stage stag = stageService.validateStage(id);
+		Stage stag = stageService.validateStage(id,jwt);
 		
 		return new ResponseEntity<>(stag, HttpStatus.OK);
 	}
@@ -121,9 +121,9 @@ public class StageController {
 	
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteStagiaire (@PathVariable Long id ) throws Exception{
+	public ResponseEntity<Void> deleteStagiaire (@PathVariable Long id,@RequestHeader("Authorization") String jwt ) throws Exception{
 		
-		stageService.deleteStage(id);
+		stageService.deleteStage(id, jwt);
 		
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}

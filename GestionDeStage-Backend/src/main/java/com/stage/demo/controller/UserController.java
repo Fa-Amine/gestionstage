@@ -30,7 +30,7 @@ public class UserController {
 
 		User user = userService.getProfile(jwt);
 		
-		return new ResponseEntity<>("welcome to Users Page", HttpStatus.OK);
+		return new ResponseEntity<>("welcome to hell", HttpStatus.OK);
 	}
 	
 	
