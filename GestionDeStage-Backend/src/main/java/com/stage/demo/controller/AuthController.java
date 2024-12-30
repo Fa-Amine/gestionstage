@@ -11,18 +11,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.stage.demo.config.JwtProvider;
-import com.stage.demo.entities.Stagiaire;
-import com.stage.demo.entities.User;
+import com.stage.demo.model.Stagiaire;
+import com.stage.demo.model.User;
 import com.stage.demo.repository.UserRepository;
 import com.stage.demo.request.LoginRequest;
 import com.stage.demo.response.AuthResponse;
 import com.stage.demo.service.CustomerUserServiceImplementation;
-import com.stage.demo.service.UserService;
 
 
 
@@ -32,26 +30,14 @@ public class AuthController {
 	
 	@Autowired
 	private UserRepository userRepository;
-
+	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
 	@Autowired
-	private UserService userService;
-	
-	@Autowired
 	private CustomerUserServiceImplementation customUserDetails;
 	
-	@PostMapping("/verify")
-	public ResponseEntity verifyUserAuthenticated (@RequestHeader("Authorization") String jwt){
-		try {
-	        JwtProvider.verifyToken(jwt);
-	        Stagiaire stagiaire = userService.getStagiaireProfile(jwt);
-	        return new ResponseEntity(stagiaire, HttpStatus.OK);
-	    } catch (Exception e) {
-	        return new ResponseEntity("Token validation failed: " + e.getMessage(), HttpStatus.UNAUTHORIZED);
-	    }
-	}
+	
 	
 	//Post methode for signup dial Stagiaire. ill create the rest later
 	@PostMapping("/signupStagiaire")
@@ -66,9 +52,10 @@ public class AuthController {
     	String n_telephone = user.getNumeroTelephone();
     	String password = user.getMotDePasse(); 	
     	String role = "ROLE_STAGIAIRE";
+    //	boolean status = user.isAccStatus();
     	
     	
-    	Stagiaire isEmailExist = userRepository.findByEmail(email);
+    	User isEmailExist = userRepository.findByEmail(email);
     	
     	if(isEmailExist != null) {
     		
@@ -101,7 +88,7 @@ public class AuthController {
     	authResponse.setMessage("Registered Successfully");
     	authResponse.setStatus(true);
     	
-    	return new ResponseEntity<>(authResponse , HttpStatus.OK);
+    	return new ResponseEntity<>(authResponse , HttpStatus.CREATED);
     	
 	}
 	
@@ -111,29 +98,40 @@ public class AuthController {
 	 @PostMapping("/login")
 	    public ResponseEntity<AuthResponse> signin (@RequestBody LoginRequest loginRequest){
 	    	
-	    	String username = loginRequest.getEmail();
-	    	String password = loginRequest.getPassword();
-	    	
-	    	System.out.println(username+ " ------- " +password);
-	    	
-	    	Authentication authentication = authenticate(username , password);
-	    	SecurityContextHolder.getContext().setAuthentication(authentication);
-	    	
-	    	String token = JwtProvider.generateToken(authentication);
-	    	AuthResponse authResponse = new AuthResponse();
-	    	
-	    	authResponse.setMessage("Login Successful");
-	    	authResponse.setJwt(token);
-	    	authResponse.setStatus(true);
-	    	
-	    	return new ResponseEntity<>(authResponse , HttpStatus.OK);
+			AuthResponse authResponse = new AuthResponse();
+			
+			try {
+				String username = loginRequest.getEmail();
+				String password = loginRequest.getPassword();
+
+				System.out.println(username+ " ------- " +password);
+
+				Authentication authentication = authenticate(username , password);
+				SecurityContextHolder.getContext().setAuthentication(authentication);
+
+				String token = JwtProvider.generateToken(authentication);
+
+				authResponse.setMessage("Login Successful");
+				authResponse.setJwt(token);
+				authResponse.setStatus(true);
+				return new ResponseEntity<>(authResponse , HttpStatus.OK);
+				
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+				authResponse.setMessage(e.getMessage());
+				authResponse.setJwt(null);
+				authResponse.setStatus(false);
+				
+				return new ResponseEntity<>(authResponse , HttpStatus.UNAUTHORIZED);
+			}
 	    	
 	    	
 	    }
 	    
 	 
-	 //authenticate methode to check user and motdepasse
-	 private Authentication authenticate(String username, String password) {
+	 	//authenticate methode to check user and motdepasse
+	    private Authentication authenticate(String username, String password) {
 	    	
 	    	UserDetails userDetails = customUserDetails.loadUserByUsername(username);
 	    	

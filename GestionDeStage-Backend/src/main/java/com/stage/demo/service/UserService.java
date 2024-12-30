@@ -2,13 +2,18 @@ package com.stage.demo.service;
 
 import java.util.List;
 
-import com.stage.demo.entities.Stagiaire;
-import com.stage.demo.entities.User;
+import org.springframework.stereotype.Service;
 
+import com.stage.demo.model.Stagiaire;
+import com.stage.demo.model.User;
+
+
+@Service
 public interface UserService {
 	
-	public Stagiaire getStagiaireProfile (String jwt);
-	
-	public List<User> getAllStagiaire();
+	public User getProfile (String jwt);
+
+	public List<User> getAllUsers();
+	public List<User> getAllNormalUsers();
 
 }

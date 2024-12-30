@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +20,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Configuration
+@EnableWebSecurity
 public class AppConfig {
 
 	
@@ -30,10 +32,15 @@ public class AppConfig {
 				  management->management.sessionCreationPolicy(
 						 SessionCreationPolicy.STATELESS 
 						 )
-				  ).csrf(csrf->csrf.disable())
+				  ).authorizeHttpRequests(
+						  Authorize->Authorize.requestMatchers("/api/**").authenticated().anyRequest().permitAll()
+				  ).addFilterBefore(new JwtTokenValidator() , BasicAuthenticationFilter.class)
+		                        .csrf(csrf->csrf.disable())
 		                        .cors(cors->cors.configurationSource(corsConfigurationSource()))
-		                        .httpBasic(Customizer.withDefaults())
-		                        .formLogin(Customizer.withDefaults());
+		                        
+		                        .httpBasic(httpBasic -> httpBasic.disable())
+		                        
+		                        .formLogin(form -> form.disable());
 		  
 		  return http.build();
 	}
