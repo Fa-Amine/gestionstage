@@ -2,34 +2,22 @@ import {
     Box,
     Flex,
     Text,
-    IconButton,
-    Stack,
-    Collapse,
-    useColorModeValue,
-    useBreakpointValue,
-    useDisclosure,
     Button,
-    image,
-    Container,
     Heading,
     Image
   } from '@chakra-ui/react'
-import { useContext } from 'react';
-  import { useNavigate } from 'react-router-dom';
-import { globalProvider } from '../context/AppContext';
+import { useNavigate } from 'react-router-dom';
 
   export default function Main(){
     const navigate = useNavigate();
-    const {user} = useContext(globalProvider);
     return(
         <>
-            
-            <Flex mt ="10px" padding={"20"}>  
-                <Box mt ="80px" h="100" maxW="500px" justifyContent={'normal'} >
-                    <Heading mb= "10px" fontSize={"30px"}>
-                        Bienvenue {user ? user.nomComplete : ""}
+            <Flex fontFamily={"zeitung, sans-serif"} mt="15px" w={"80%"} margin={"auto"} gap={10} justifyContent={"space-between"} alignItems={"flex-start"}>  
+                <Box mt="80px" minW="500px" >
+                    <Heading textAlign={"left"} fontFamily={"zeitung, sans-serif"} fontWeight={"700"} mb= "10px" fontSize={"36px"}>
+                    Choisissez votre voie, votre secteur, votre choix, votre avenir.
                     </Heading>
-                    <Text fontSize={"16px"} fontWeight="light" lineClamp="2">
+                    <Text fontSize={"20px"} fontWeight="400" color={"#b2b2b2"} lineClamp="2">
                         Avez-Vous une préference en un secteur
                         d'activité particulier ?
                         Selectioner directement les entreprise en 
@@ -37,15 +25,11 @@ import { globalProvider } from '../context/AppContext';
                         de votre domaine de prédilection.
                     </Text>
                     <Button onClick={() => navigate("/login")} mt = "20px" colorPalette="teal" variant="solid">Postuler Maintenant !</Button>
-
                 </Box>
-                <Box>
-                    <Image src="/Images/Acceuil.png" />
-
-                </Box>
-
                 
-
+                {/* <Box> */}
+                <Image w={"50%"} sizes="(max-width: 480px) 588px, (max-width: 1279px) 1176px, 1764px" src="/Images/Acceuil.png" />
+                {/* </Box> */}
             </Flex>
 
 
